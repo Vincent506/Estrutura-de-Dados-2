@@ -34,7 +34,7 @@ void inserir_no_inicio(No **lista, int num){
 }
 
 void inserir_no_final(No **lista, int num){
-    No *novo,*aux = (No*)malloc(sizeof(No));
+    No *aux,*novo = (No*)malloc(sizeof(No));
     if (novo)
     {
         novo->valor = num;
@@ -104,15 +104,17 @@ int main()
             break;
             case 2:
         system("clear");
-            printf("Digite um numero inteiro");
+            printf("Digite um numero inteiro: ");
             scanf("%d", &elemento);
             inserir_no_final(&listaSimples, elemento);
+            printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
 
             case 3:
             system("clear");
             printf("Lista simplesmente encadeada:\n");
             mostrar(listaSimples);
+            
             break;
             case 0:
             system("clear");
