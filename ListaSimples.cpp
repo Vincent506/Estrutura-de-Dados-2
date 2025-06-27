@@ -10,7 +10,7 @@ typedef struct no
 
 //Função para inserir no inicio
 //dentro da nossa struct no temos um endereço de memoria
-//para acessalo usaremos ponteiro pra ponteiro (No **lista)
+//para acessa-lo usaremos ponteiro pra ponteiro (No **lista)
 //e o valor que iremos adicionar(int num)
 void inserir_no_inicio(No **lista, int num){
 //cria se um ponteiro que vamos usar como um espaço vazio
@@ -30,6 +30,22 @@ void inserir_no_inicio(No **lista, int num){
         *lista = novo;
     }else{
         printf("Erro ao alocar memoria");
+    }
+}
+
+void inserir_no_final(No **lista, int num){
+    No *novo,*aux = (No*)malloc(sizeof(No));
+    if (*lista == NULL)
+    {
+        novo->valor = num;
+        novo->proximo = NULL;
+        *lista = novo;
+    }else{
+        while (aux->proximo!=NULL)
+        {
+            aux = aux->proximo;
+        }
+        aux->proximo = novo;
     }
 }
 //função para mostrar a lista encadeada
@@ -59,12 +75,14 @@ void mostrar(No *cabeca){
 int main()
 {
     No *listaSimples = NULL;
+    int elemento;
     int option = -1;
     while (option != 0)
     {
         printf("MENU DE OPÇÕES\n");
-        printf("1 - Adicionar elemento\n");
-        printf("2 - Mostrar a Lista\n");
+        printf("1 - Adicionar elemento no inicio da lista\n");
+        printf("2 - Adicionar elemento no final da lista\n");
+        printf("3 - Mostrar a Lista\n");
         printf("0 - Sair e fechar o programa\n");
         printf("O que deseja fazer? ");
         scanf("%d", &option);
@@ -74,14 +92,20 @@ int main()
         case 1:
         system("clear");
             printf("Digite um numero inteiro: ");
-            int elemento;
+            
             scanf("%d",&elemento);
             inserir_no_inicio(&listaSimples, elemento);
             
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
-
             case 2:
+        system("clear");
+            printf("Digite um numero inteiro");
+            scanf("%d", &elemento);
+            inserir_no_final(&listaSimples, elemento);
+            break;
+
+            case 3:
             system("clear");
             printf("Lista simplesmente encadeada:\n");
             mostrar(listaSimples);
