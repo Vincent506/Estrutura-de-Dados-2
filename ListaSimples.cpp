@@ -35,17 +35,21 @@ void inserir_no_inicio(No **lista, int num){
 
 void inserir_no_final(No **lista, int num){
     No *novo,*aux = (No*)malloc(sizeof(No));
-    if (*lista == NULL)
+    if (novo)
     {
         novo->valor = num;
         novo->proximo = NULL;
-        *lista = novo;
-    }else{
-        while (aux->proximo!=NULL)
+        if (*lista == NULL)
         {
+            *lista = novo;
+        }else
+        {
+            aux = *lista; 
+            while (aux->proximo){
             aux = aux->proximo;
         }
         aux->proximo = novo;
+        }
     }
 }
 //função para mostrar a lista encadeada
