@@ -85,8 +85,8 @@ void mostrar(No *cabeca){
     if (cabeca == NULL)
     {
         system("clear");
-        printf("Lista vazia");
-    }
+        printf("Lista vazia\n");
+    }else{
     //se não, usamos uma estrutura de repetição while para percorrer a lista
     //ate o ponteiro "percorre" ou seja o fim da nossa lista 
         while (percorre != NULL)
@@ -96,8 +96,9 @@ void mostrar(No *cabeca){
             //percorre recebe ele mesmo apontando para o proximo
             percorre = percorre->proximo;
         }
-        printf("\n");
+        printf("FIM\n");
     }
+}
 
 //Dentro desse programa nos temos uma lista encadeada onde so adicionamos 
 //elementos no topo, no final da lista e exibimos.
