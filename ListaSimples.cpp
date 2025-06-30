@@ -7,12 +7,22 @@ typedef struct no
     int valor;
     struct no *proximo;
 }No;
+typedef struct 
+{
+    No *inicio;
+    int tam;
+}Lista;
 
+void criar_Lista(Lista *lista){
+    lista->inicio = NULL;
+    lista->tam = 0;
+
+}
 //Função para inserir no inicio
 //dentro da nossa struct nos temos um endereço de memoria, e
 //para acessa-lo usaremos ponteiro pra ponteiro (No **lista)
 //e o valor que iremos adicionar(int num)
-void inserir_no_inicio(No **lista, int num){
+void inserir_no_inicio(Lista *lista, int num){
 //cria se um ponteiro que vamos usar como um espaço vazio
 //utilizamos a função malloc para reservar esse espaço de memoria
     No *novo = (No*)malloc(sizeof(No));  
@@ -24,25 +34,27 @@ void inserir_no_inicio(No **lista, int num){
         novo->valor = num;
         //O ponteiro de "novo" vai apontar para o ponteiro da
         //"lista" que foi parametro da nossa função
-        novo->proximo = *lista;
+        novo->proximo = lista->inicio;
         //por fim o endereço da estrutura do parametro vai receber o 
         //espaço de memoria que nos haviamos separado. Agora preenchido 
-        *lista = novo;
+        lista->inicio = novo;
+        lista->tam++;
     }else{
         printf("Erro ao alocar memoria");
     }
 }
-void inserir_no_meio(No **lista, int num, int ant){
+void inserir_no_meio(Lista *lista, int num, int ant){
     No *novo = (No*)malloc(sizeof(No));
     No *aux = (No*)malloc(sizeof(No));
     if (novo)
     {
         novo->valor = num;
-        if (*lista == NULL)
+        if (lista->inicio == NULL)
         {
             novo->proximo = NULL;
+            lista->inicio = novo;
         }else{
-            aux = *lista;
+            aux = lista->inicio;
             while (aux->valor!=ant && aux->proximo)
             {
                 aux = aux->proximo;
@@ -50,6 +62,7 @@ void inserir_no_meio(No **lista, int num, int ant){
             novo->proximo = aux->proximo;
             aux->proximo = novo;
         }
+        lista->tam++;
         
     }else{
         system("clear");
@@ -58,37 +71,39 @@ void inserir_no_meio(No **lista, int num, int ant){
     
 }
 
-void inserir_no_final(No **lista, int num){
+void inserir_no_final(Lista *lista, int num){
     No *aux,*novo = (No*)malloc(sizeof(No));
     if (novo)
     {
         novo->valor = num;
         novo->proximo = NULL;
-        if (*lista == NULL)
+        if (lista->inicio == NULL)
         {
-            *lista = novo;
+            lista->inicio = novo;
         }else
         {
-            aux = *lista; 
+            aux = lista->inicio; 
             while (aux->proximo){
             aux = aux->proximo;
         }
         aux->proximo = novo;
+        lista->tam++;
         }
     }
 }
 //função para mostrar a lista encadeada
-void mostrar(No *cabeca){
+void mostrar(Lista lista){
 //criar um ponteiro que percorre a nossa lista
-    No *percorre = cabeca;
+    No *percorre = lista.inicio;
     //se a lista estiver vazia imprime uma mensagem 
-    if (cabeca == NULL)
+    if (percorre == NULL)
     {
         system("clear");
         printf("Lista vazia\n");
     }else{
     //se não, usamos uma estrutura de repetição while para percorrer a lista
     //ate o ponteiro "percorre" ou seja o fim da nossa lista 
+    printf("Lista simplesmente encadeada de tamanho %d:\n",lista.tam);
         while (percorre != NULL)
         {
             //exibe o valor inteiro
@@ -104,7 +119,9 @@ void mostrar(No *cabeca){
 //elementos no topo, no final da lista e exibimos.
 int main()
 {
-    No *listaSimples = NULL;
+    //No *listaSimples = NULL;
+    Lista listasimples;
+    criar_Lista(&listasimples);
     int elemento;
     int option = -1;
     while (option != 0)
@@ -125,7 +142,7 @@ int main()
             printf("Digite um numero inteiro: ");
             
             scanf("%d",&elemento);
-            inserir_no_inicio(&listaSimples, elemento);
+           inserir_no_inicio(&listasimples, elemento);
             
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
@@ -138,7 +155,7 @@ int main()
 
             int anterior;
             scanf("%d", &anterior);
-            inserir_no_meio(&listaSimples,elemento, anterior);
+            inserir_no_meio(&listasimples,elemento, anterior);
 
             printf("\nValor %d adicionado com sucesso!!!\n\n",elemento);
             break;
@@ -146,14 +163,14 @@ int main()
         system("clear");
             printf("Digite um numero inteiro: ");
             scanf("%d", &elemento);
-            inserir_no_final(&listaSimples, elemento);
+            inserir_no_final(&listasimples, elemento);
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
 
             case 4:
             system("clear");
-            printf("Lista simplesmente encadeada:\n");
-            mostrar(listaSimples);
+            
+            mostrar(listasimples);
             
             break;
             case 0:
