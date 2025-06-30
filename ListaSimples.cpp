@@ -1,7 +1,7 @@
 #include<stdlib.h>
 #include<stdio.h>
 
-//esturtura de uma lista encadeada simples
+//Esturtura de uma lista encadeada simples
 typedef struct no
 {
     int valor;
@@ -9,7 +9,7 @@ typedef struct no
 }No;
 
 //Função para inserir no inicio
-//dentro da nossa struct no temos um endereço de memoria
+//dentro da nossa struct nos temos um endereço de memoria, e
 //para acessa-lo usaremos ponteiro pra ponteiro (No **lista)
 //e o valor que iremos adicionar(int num)
 void inserir_no_inicio(No **lista, int num){
@@ -31,6 +31,31 @@ void inserir_no_inicio(No **lista, int num){
     }else{
         printf("Erro ao alocar memoria");
     }
+}
+void inserir_no_meio(No **lista, int num, int ant){
+    No *novo = (No*)malloc(sizeof(No));
+    No *aux = (No*)malloc(sizeof(No));
+    if (novo)
+    {
+        novo->valor = num;
+        if (*lista == NULL)
+        {
+            novo->proximo = NULL;
+        }else{
+            aux = *lista;
+            while (aux->valor!=ant && aux->proximo)
+            {
+                aux = aux->proximo;
+            }
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
+        }
+        
+    }else{
+        system("clear");
+        printf("Erro ao alocar memoria");
+    }
+    
 }
 
 void inserir_no_final(No **lista, int num){
@@ -75,7 +100,7 @@ void mostrar(No *cabeca){
     }
 
 //Dentro desse programa nos temos uma lista encadeada onde so adicionamos 
-//elementos no topo da lista e exibimos.
+//elementos no topo, no final da lista e exibimos.
 int main()
 {
     No *listaSimples = NULL;
@@ -85,8 +110,9 @@ int main()
     {
         printf("MENU DE OPÇÕES\n");
         printf("1 - Adicionar elemento no inicio da lista\n");
-        printf("2 - Adicionar elemento no final da lista\n");
-        printf("3 - Mostrar a Lista\n");
+        printf("2 - Adicionar elemento no meio da lisata\n");
+        printf("3 - Adicionar elemento no final da lista\n");
+        printf("4 - Mostrar a Lista\n");
         printf("0 - Sair e fechar o programa\n");
         printf("O que deseja fazer? ");
         scanf("%d", &option);
@@ -105,12 +131,25 @@ int main()
             case 2:
         system("clear");
             printf("Digite um numero inteiro: ");
+
+            scanf("%d", &elemento);
+            printf("Digite o elemento anterior: ");
+
+            int anterior;
+            scanf("%d", &anterior);
+            inserir_no_meio(&listaSimples,elemento, anterior);
+
+            printf("\nValor %d adicionado com sucesso!!!\n\n",elemento);
+            break;
+            case 3:
+        system("clear");
+            printf("Digite um numero inteiro: ");
             scanf("%d", &elemento);
             inserir_no_final(&listaSimples, elemento);
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
 
-            case 3:
+            case 4:
             system("clear");
             printf("Lista simplesmente encadeada:\n");
             mostrar(listaSimples);
