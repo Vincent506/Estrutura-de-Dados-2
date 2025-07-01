@@ -91,6 +91,36 @@ void inserir_no_final(Lista *lista, int num){
         }
     }
 }
+void inserir_ordenado(Lista *lista, int num){
+    No *novo = (No*)malloc(sizeof(No));
+    No *aux = (No*)malloc(sizeof(No));
+    if (novo)
+    {
+        novo->valor = num;
+        if (lista->inicio == NULL)
+        {
+            novo->proximo = NULL;
+            lista->inicio = novo;
+        }else if (novo->valor < lista->inicio->valor)
+        {
+            novo->proximo = lista->inicio;
+            lista->inicio = novo;
+        }else
+        {
+            aux = lista->inicio;
+            while (aux->proximo && novo->valor> aux->proximo->valor)
+            {
+                aux = aux->proximo;
+            }
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
+        }
+        lista->tam++;
+    }else{
+    system("clear");
+        printf("Erro ao alocar memoria!!!\n");
+    }
+}
 //função para mostrar a lista encadeada
 void mostrar(Lista lista){
 //criar um ponteiro que percorre a nossa lista
@@ -130,7 +160,8 @@ int main()
         printf("1 - Adicionar elemento no inicio da lista\n");
         printf("2 - Adicionar elemento no meio da lisata\n");
         printf("3 - Adicionar elemento no final da lista\n");
-        printf("4 - Mostrar a Lista\n");
+        printf("4 - Inserir elemento ordenado\n");
+        printf("5 - Mostrar a Lista\n");
         printf("0 - Sair e fechar o programa\n");
         printf("O que deseja fazer? ");
         scanf("%d", &option);
@@ -166,8 +197,15 @@ int main()
             inserir_no_final(&listasimples, elemento);
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
-
             case 4:
+            system("clear");
+            printf("Digite um numero inteiro: ");
+            scanf("%d", &elemento);
+            inserir_ordenado(&listasimples, elemento);
+            printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
+            break;
+
+            case 5:
             system("clear");
             
             mostrar(listasimples);
