@@ -114,6 +114,34 @@ void inserir_ordenado(Lista *lista, int num){
     }
 }
 
+No* remover(Lista *lista, int num){
+    No *lixo = new No;
+    No *aux = new No;
+    lixo = NULL;
+    if (lista != NULL)
+    {
+        if (lista->inicio->valor == num)
+        {
+            lixo = lista->inicio;
+            lista->inicio = lixo->proximo;
+            lista->tam--;
+        }else{
+            aux = lista->inicio;
+            while (aux->proximo!= NULL && aux->proximo->valor != num)
+            {
+                aux = aux->proximo;
+            }
+            if (aux->proximo != NULL)
+            {
+                lixo = aux->proximo;
+                aux->proximo = lixo->proximo;
+                lista->tam--;
+            }
+        }
+    }
+    return lixo;
+}
+
 void mostrar(Lista lista){
 
     No *percorre = lista.inicio;
@@ -140,6 +168,7 @@ int main()
 {
 
     Lista listasimples;
+    No* trash;
     criar_Lista(&listasimples);
     int elemento;
     int option = -1;
@@ -150,7 +179,8 @@ int main()
         printf("2 - Adicionar elemento no meio da lisata\n");
         printf("3 - Adicionar elemento no final da lista\n");
         printf("4 - Inserir elemento ordenado\n");
-        printf("5 - Mostrar a Lista\n");
+        printf("5 - Remover elemento\n");
+        printf("6 - Mostrar a Lista\n");
         printf("0 - Sair e fechar o programa\n");
         printf("O que deseja fazer? ");
         scanf("%d", &option);
@@ -193,8 +223,22 @@ int main()
             inserir_ordenado(&listasimples, elemento);
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
-
             case 5:
+            system("clear");
+            printf("Digite um valor á ser removido: ");
+            scanf("%d", &elemento);
+            trash = remover(&listasimples, elemento);
+            if (trash != NULL)
+            {
+                printf("\nValor %d removido com sucesso!!\n\n", trash->valor);
+                free(trash);
+            }else{
+                printf("\nValor inexistente\n\n!!!");
+            }
+            
+            break;
+
+            case 6:
             system("clear");
             
             mostrar(listasimples);
