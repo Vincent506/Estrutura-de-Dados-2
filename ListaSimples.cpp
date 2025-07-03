@@ -142,6 +142,31 @@ No* remover(Lista *lista, int num){
     return lixo;
 }
 
+No* buscar(Lista *lista, int num){
+    No *pesquisa = new No;
+    No *aux = new No;
+    pesquisa = NULL;
+    if (lista->inicio != NULL)
+    {
+        if (lista->inicio->valor == num)
+        {
+            pesquisa = lista->inicio;
+        }else{
+            aux = lista->inicio;
+            while (aux->proximo != NULL && aux->proximo->valor != num)
+            {
+                aux = aux->proximo;
+            }
+            if (aux->proximo != NULL)
+            {
+                pesquisa = aux->proximo;
+            }
+        }
+    }
+
+    return pesquisa;
+}
+
 void mostrar(Lista lista){
 
     No *percorre = lista.inicio;
@@ -169,6 +194,7 @@ int main()
 
     Lista listasimples;
     No* trash;
+    No* search;
     criar_Lista(&listasimples);
     int elemento;
     int option = -1;
@@ -176,11 +202,12 @@ int main()
     {
         printf("MENU DE OPÇÕES\n");
         printf("1 - Adicionar elemento no inicio da lista\n");
-        printf("2 - Adicionar elemento no meio da lisata\n");
+        printf("2 - Adicionar elemento no meio da lista\n");
         printf("3 - Adicionar elemento no final da lista\n");
         printf("4 - Inserir elemento ordenado\n");
         printf("5 - Remover elemento\n");
-        printf("6 - Mostrar a Lista\n");
+        printf("6 - Pesquisar elemento\n"); 
+        printf("7 - Mostrar a Lista\n");
         printf("0 - Sair e fechar o programa\n");
         printf("O que deseja fazer? ");
         scanf("%d", &option);
@@ -224,7 +251,7 @@ int main()
             printf("\nValor %d adicionado com sucesso!!\n\n",elemento);
             break;
             case 5:
-            system("clear");
+        system("clear");
             printf("Digite um valor á ser removido: ");
             scanf("%d", &elemento);
             trash = remover(&listasimples, elemento);
@@ -233,19 +260,32 @@ int main()
                 printf("\nValor %d removido com sucesso!!\n\n", trash->valor);
                 free(trash);
             }else{
-                printf("\nValor inexistente\n\n!!!");
+                printf("\nValor inexistente!!!\n\n");
+            }
+            
+            break;
+            case 6:
+        system("clear");
+            printf("Digite o valor que deseja buscar: ");
+            scanf("%d", &elemento);
+            search = buscar(&listasimples, elemento);
+            if (search != NULL)
+            {
+                printf("\nValor %d encontrado!!!\n\n", search->valor);
+            }else{
+                printf("\nValor inexistente!!!\n\n");
             }
             
             break;
 
-            case 6:
+            case 7:
             system("clear");
             
             mostrar(listasimples);
             
             break;
             case 0:
-            system("clear");
+        system("clear");
             printf("fechando o programa....\n");
             break;
         
