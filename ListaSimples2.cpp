@@ -70,6 +70,35 @@ void inserir_no_meio(No **lista,int anterior, int elemento){
     }
 }
 
+void inserir_ordenado(No **lista, int elemento){
+    No *novo = new No;
+    No *aux = new No;
+    aux = *lista;
+    if (novo)
+    {
+        novo->elemento = elemento;
+        if (lista == NULL)
+        {
+            novo->proximo = NULL;
+            *lista = novo;
+        }else if (novo->elemento < aux->proximo->elemento)
+        {
+            novo->proximo = aux->proximo;
+            inserir_no_inicio(lista, novo->elemento);
+        }else{
+            while (aux->proximo != NULL && novo->elemento > aux->elemento )
+            {
+                aux = aux->proximo;
+            }
+            novo->proximo = aux->proximo;
+            aux->proximo = novo;
+        }
+    }else{
+    system("clear");
+        printf("Erro ao alocar memoria");
+    }
+}
+
 void mostrar(No*lista){
     No *aux = lista;
     
@@ -99,7 +128,8 @@ int main(){
         printf("1 - inserir no inicio;\n");
         printf("2 - inserir no meio;\n");
         printf("3 - inserir no final;\n");
-        printf("4 - mostrar lista\n");
+        printf("4 - inserir ordenado;\n");
+        printf("5 - mostrar lista\n");
         printf("0 - sair e fechar o programa\n");
         printf("Digite a sua opção: ");
         scanf("%d", &option);
@@ -128,6 +158,12 @@ int main(){
             inserir_no_final(&listasimples,conteudo);
             break;
             case 4:
+        system("clear");
+            printf("Digite um numero inteiro: ");
+            scanf("%d", &conteudo);
+            inserir_ordenado(&listasimples, conteudo);
+            break;
+            case 5:
         system("clear");
             mostrar(listasimples);
             break;
