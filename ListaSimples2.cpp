@@ -28,7 +28,7 @@ void inserir_no_final(No **lista, int elemento){
 
     if (novo)
     {
-        novo->elemento = NULL;
+        novo->elemento = elemento;
         novo->proximo =  NULL;
         if (*lista == NULL)
         {
@@ -40,29 +40,43 @@ void inserir_no_final(No **lista, int elemento){
                 aux = aux->proximo;
             }
             aux->proximo = novo;
-            *lista = aux->proximo;
         }
     }else{
         printf("Erro ao alocar memoria");
     }
 }
 
-void mostrar(){
-    //
+void mostrar(No*lista){
+    No *aux = lista;
+    
+    if (lista != NULL)
+    {
+        printf("Lista Simplesmente encadeada: \n");
+        while (aux)
+        {
+        printf("%d - ", aux->elemento);
+        aux = aux->proximo;
+        }
+        printf("FIM");
+    }else{
+        printf("Lista vazia!!");
+    }
 }
 
 int main(){
     No *listasimples = NULL;
     int option = -1;
     int conteudo;
-    printf("\t===MENU DE OPÇOES ===\n\n");
-    printf("1 -  inserir no inicio;\n");
-    printf("2 - inserir no final;\n");
-    printf("3 - mostrar lista");
-    printf("0 - sair e fechar o programa\n");
 
     while (option != 0)
     {
+        printf("\t===MENU DE OPÇOES ===\n\n");
+        printf("1 -  inserir no inicio;\n");
+        printf("2 - inserir no final;\n");
+        printf("3 - mostrar lista\n");
+        printf("0 - sair e fechar o programa\n");
+        printf("Digite a sua opção: ");
+        scanf("%d", &option);
         switch (option)
         {
         case 1:
@@ -79,9 +93,11 @@ int main(){
             break;
             case 3:
         system("clear");
-            
+            mostrar(listasimples);
             break;
         default:
+        system("clear");
+            printf("Digite uma opção válida\n");
             break;
         }
     }
