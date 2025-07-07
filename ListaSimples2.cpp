@@ -81,7 +81,7 @@ void inserir_ordenado(No **lista, int elemento){
         {
             novo->proximo = NULL;
             *lista = novo;
-        }else if (novo->elemento < aux->proximo->elemento)
+        }else if (novo->elemento > aux->proximo->elemento)
         {
             novo->proximo = aux->proximo;
             inserir_no_inicio(lista, novo->elemento);
@@ -97,6 +97,57 @@ void inserir_ordenado(No **lista, int elemento){
     system("clear");
         printf("Erro ao alocar memoria");
     }
+}
+
+No* buscar(No **lista, int busca){
+    No *pesquisa =  new No;
+    No *aux = new No;
+    aux = *lista;
+    pesquisa = NULL;
+    if (aux != NULL)
+    {
+        if (aux->elemento == busca)
+        {
+            pesquisa = aux->proximo;
+        }else{
+            while (aux->proximo != NULL && aux->proximo->elemento != busca)
+            {
+                aux = aux->proximo;
+            }
+            if (aux->proximo != NULL)
+            {
+                pesquisa = aux->proximo;
+            }
+        }
+    }
+    return pesquisa;
+}
+
+No* remover(No **lista, int lixo){
+    No *lixeira = new No;
+    lixeira = NULL;
+    No *aux = new No;
+    aux = *lista;
+    if (aux != NULL)
+    {
+        if (aux->elemento == lixo)
+        {
+            //essa parte da função não ta funcionando ;-;
+            lixeira = aux;
+            aux = lixeira->proximo;
+        }else{
+            while (aux->proximo != NULL && aux->proximo->elemento != lixo)
+            {
+                aux = aux->proximo;
+            }
+            if (aux->proximo != NULL)
+            {
+                lixeira = aux->proximo;
+                aux = lixeira->proximo;
+            }   
+        }
+    }
+    return lixeira;
 }
 
 void mostrar(No*lista){
@@ -121,6 +172,7 @@ int main(){
     int option = -1;
     int conteudo;
     int referencia;
+    No *search = new No;
 
     while (option != 0)
     {
@@ -130,6 +182,8 @@ int main(){
         printf("3 - inserir no final;\n");
         printf("4 - inserir ordenado;\n");
         printf("5 - mostrar lista\n");
+        printf("6 - buscar elemento;\n");
+        printf("7 - remover elemento;\n");
         printf("0 - sair e fechar o programa\n");
         printf("Digite a sua opção: ");
         scanf("%d", &option);
@@ -140,6 +194,7 @@ int main(){
             printf("Digite um numero inteiro: ");
             scanf("%d", &conteudo);
             inserir_no_inicio(&listasimples,conteudo);
+            printf("\nElemento adicionado com sucesso!!\n\n");
             break;
             case 2:
         system("clear");
@@ -150,22 +205,51 @@ int main(){
             printf("Digite um numero anterio para inserir %d: ", conteudo);
             scanf("%d", &referencia);
             inserir_no_meio(&listasimples, referencia, conteudo);
+            printf("\nElemento adicionado com sucesso!!\n\n");
             break;
         case 3: 
         system("clear");
             printf("Digite um numero inteiro: ");
             scanf("%d", &conteudo);
             inserir_no_final(&listasimples,conteudo);
+            printf("\nElemento adicionado com sucesso!!\n\n");
             break;
             case 4:
         system("clear");
             printf("Digite um numero inteiro: ");
             scanf("%d", &conteudo);
             inserir_ordenado(&listasimples, conteudo);
+            printf("\nElemento adicionado com sucesso!!\n\n");
             break;
             case 5:
         system("clear");
             mostrar(listasimples);
+            break;
+            case 6:
+        system("clear");
+            printf("Digite o elemento que esta procurando: ");
+            scanf("%d", &conteudo);
+            search = buscar(&listasimples, conteudo);
+            
+            if (search != NULL)
+            {
+                printf("Elemento encontrado");
+            }else{
+                printf("Elemento inexistente");
+            }
+            break;
+            case 7:
+        system("clear");
+            mostrar(listasimples);
+            printf("Digite o elemento que deseja remover: ");
+            scanf("%d", &conteudo);
+            search = remover(&listasimples, conteudo);
+            if (search != NULL)
+            {
+                free(search);
+            }else{
+                printf("Elemnto não encontrado");
+            }
             break;
             case 0:
         system("clear");
