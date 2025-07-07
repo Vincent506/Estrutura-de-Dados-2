@@ -13,7 +13,7 @@ void full(  int vetor[]){
 
 
 void ShellSort(int tamanho,int numeros[]){
-    int gap=4;
+    int gap=3;
     int percorre = tamanho-gap;
     while (gap>0){
          for (int i = 0; i < percorre; i++){
@@ -43,20 +43,28 @@ void ShellSort(int tamanho,int numeros[]){
 int main()
 {
     srand(time(NULL));
-    int tamanho = 0;
     //printf("Digite o tamanho do vetor que desejar.");
     //scanf("%d",&tamanho);
-    int vetor[tamanho];
-    full(vetor);
-    
+    int vetor[7];
+    //full(vetor);
+    vetor[0] = 29;
+    vetor[1] = 12;
+    vetor[2] = 45;
+    vetor[3] = 22;
+    vetor[4] = 6;
+    vetor[5] = 38;
+    vetor[6] = 15;
     printf("\nVetor Original\n");
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 7; i++)
     {
         printf("%d ",vetor[i]);
     }
-    ShellSort(8,vetor);
+    ShellSort(7,vetor);
+    int aux = vetor[1];
+    vetor[1] = vetor[2];
+    vetor[2] = aux;
     printf("\nVetor Ordenado com ShellSort\n");
-    for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 7; i++)
     {
         printf("%d ",vetor[i]);
     }

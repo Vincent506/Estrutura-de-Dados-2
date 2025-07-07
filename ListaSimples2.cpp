@@ -132,9 +132,8 @@ No* remover(No **lista, int lixo){
     {
         if (aux->elemento == lixo)
         {
-            //essa parte da função não ta funcionando ;-;
-            lixeira = aux;
-            aux = lixeira->proximo;
+            lixeira = *lista;
+            *lista = lixeira->proximo;
         }else{
             while (aux->proximo != NULL && aux->proximo->elemento != lixo)
             {
@@ -143,7 +142,7 @@ No* remover(No **lista, int lixo){
             if (aux->proximo != NULL)
             {
                 lixeira = aux->proximo;
-                aux = lixeira->proximo;
+                aux->proximo = lixeira->proximo;
             }   
         }
     }
